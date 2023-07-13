@@ -1,13 +1,5 @@
 import { parse } from 'node-html-parser';
-
-export type MiniNews = {
-    title: string,
-    url: string,
-    date: string,
-    text: string,
-    image: string,
-}
-
+import { MiniNews } from './format.js';
 
 export type Parser = {
     url: string,

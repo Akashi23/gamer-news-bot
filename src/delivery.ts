@@ -1,4 +1,4 @@
-import { MiniNews } from "./parser.js";
+import { MiniNews } from "./format.js";
 
 type DeliveryQueue<T> = {
     queue: T[];
@@ -8,13 +8,27 @@ type DeliveryQueue<T> = {
     clear: () => void;
 }
 
-export class Delivery implements DeliveryQueue<MiniNews> {
+export class DeliveryNews implements DeliveryQueue<MiniNews> {
     queue: MiniNews[] = [];
+
+    constructor(news: MiniNews[]) {
+        this.queue = news;
+    }
 
     search(item: MiniNews): number {
         return this.queue.findIndex((element) => {
             return element.url === item.url;
         });
+    }
+
+    unshift(item: MiniNews) {
+        if (this.search(item) !== -1) {
+            this.queue.unshift(item);
+        }
+    }
+
+    shift(): MiniNews | undefined {
+        return this.queue.shift();
     }
 
     push(item: MiniNews) {

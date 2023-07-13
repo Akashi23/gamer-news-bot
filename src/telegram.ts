@@ -1,9 +1,10 @@
 import TelegramBot from 'node-telegram-bot-api';
-
-const telegramChats: Chat<number>[] = [];
+import { Bot } from './bot';
 
 export class Telegram implements Bot {
     private bot: TelegramBot;
+
+    private telegramChats: number[] = [];
 
     async start() {
         this.bot = new TelegramBot(process.env.TELEGRAM_TOKEN || '', { polling: true });
@@ -11,17 +12,30 @@ export class Telegram implements Bot {
 
     async sendMessage(message: string, file?: string, chatId?: number) {
         if (!chatId) {
-            telegramChats.forEach((chat) => {
-                this.sendMessage(message, file, chat.id);
+            this.telegramChats.forEach((chat) => {
+                this.sendMessage(message, file, chat);
             });
         } else {
             if (file) {
                 this.bot.sendPhoto(chatId, file, { caption: message });
             } else {
-                this.bot.sendMessage(chatId, message);
+                this.bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
             }
         }
     }
     
-    addListener: (event: string, callback: () => void) => void;
+    async addListener<RegExp> (
+        event: RegExp, 
+        callback: (msg: TelegramBot.Message, match: RegExpExecArray) => void
+    ) {
+        this.bot.onText(event as any, callback);
+    };
+
+    addChat(chatId: number) {
+        this.telegramChats.push(chatId);
+    }
+
+    removeChat(chatId: number) {
+        this.telegramChats.splice(this.telegramChats.indexOf(chatId), 1);
+    }
 }
