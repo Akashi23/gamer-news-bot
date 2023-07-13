@@ -8,7 +8,7 @@ export type MiniNews = {
 
 
 export function formatNews(news: MiniNews) {
-    return  `<b>${news.title}</b>\n\n` +
+    return  `<b> ${news.title} </b> \n\n` +
             `${news.text}\n\n` +
             `Дата публикций: ${news.date}\n` +
             `Фулл: ${news.url}`;

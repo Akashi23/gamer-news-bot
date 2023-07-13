@@ -17,7 +17,7 @@ export class Telegram implements Bot {
             });
         } else {
             if (file) {
-                this.bot.sendPhoto(chatId, file, { caption: message });
+                this.bot.sendPhoto(chatId, file, { caption: message, parse_mode: 'HTML' });
             } else {
                 this.bot.sendMessage(chatId, message, { parse_mode: 'HTML' });
             }
