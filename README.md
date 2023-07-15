@@ -1,7 +1,5 @@
 # Game News Bot
 
-![Game News Bot]:video_game:
-
 A Telegram bot that delivers game news to subscribers.
 
 ## Table of Contents
