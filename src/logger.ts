@@ -41,7 +41,7 @@ export class ConsoleLogger implements Logger {
             type: 'ERROR'
         });
             
-        console.log(formattedMessage);
+        console.error(formattedMessage);
     }
     warning(message: string) {
         const formattedMessage = this.format.format(
@@ -51,7 +51,7 @@ export class ConsoleLogger implements Logger {
             type: 'WARNING'
         });
 
-        console.log(formattedMessage);
+        console.warn(formattedMessage);
     }
 }
 
